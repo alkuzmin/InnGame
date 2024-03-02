@@ -35,4 +35,14 @@ public class Unit {
     {
         System.out.println("Iam "+this.name);
     }
+
+    private HashMap<String, Integer> resources;
+
+    public HashMap<String, Integer> getResources() {
+        return resources;
+    }
+
+    public void setResources(HashMap<String, Integer> resources) {
+        this.resources = resources;
+    }
 }
