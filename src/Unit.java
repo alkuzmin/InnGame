@@ -1,4 +1,13 @@
+import java.util.HashMap;
+
 public class Unit {
+
+    private Unit(){};
+    public Unit(String name)
+    {
+        this.setName(name);
+
+    }
     private String name;
 
     public String getName() {
@@ -9,4 +18,7 @@ public class Unit {
         if (name == null || name.isEmpty()) raise new IllegalArgumentException()
         this.name = name;
     }
+
+
+
 }
