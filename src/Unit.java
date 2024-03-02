@@ -15,7 +15,7 @@ public class Unit {
     }
 
     public void setName(String name) {
-        if (name == null || name.isEmpty()) raise new IllegalArgumentException()
+        if (name == null || name.isEmpty()) throw new IllegalArgumentException();
         this.name = name;
     }
 
