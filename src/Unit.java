@@ -1,11 +1,25 @@
 import java.sql.SQLOutput;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.HashMap;
 
-enum ResTypes {GOLD, WATER, FOOD, ENERGY}
+class NothingToUndo extends Exception{}
 
+enum ResTypes {GOLD, WATER, FOOD, ENERGY}
+interface Command{
+    public void perform();
+}
 public class Unit {
+    private Deque<Command> commands = new ArrayDeque<>();
 
     private Unit(){};
+
+    public  Unit undo() throws NothingToUndo {
+        if (commands.isEmpty()) throw new NothingToUndo();
+        commands.pop().perform();
+        return this;
+    }
+
     public Unit(String name)
     {
         this.setName(name);
@@ -20,6 +34,8 @@ public class Unit {
 
     public void setName(String name) {
         if (name == null || name.isEmpty()) throw new IllegalArgumentException();
+        String oldName = this.name;
+        this.commands.push(()->{this.name = oldName;});
         this.name = name;
     }
 
@@ -32,12 +48,14 @@ public class Unit {
 
     public void setHealth(Integer health) {
        if (health<0 || health>100) throw new IllegalArgumentException();
+       Integer oldHealth = this.health;
+       this.commands.push(()->{this.health = oldHealth;});
        this.health = health;
     }
 
     public void doVoice()
     {
-        System.out.println("Iam "+this.name);
+        System.out.println("\nI'm " + this.name);
     }
 
     private HashMap<ResTypes, Integer> resources;
@@ -48,6 +66,14 @@ public class Unit {
 
     public void setResources(ResTypes restype, Integer val) {
         if (val<0) throw new IllegalArgumentException();
+        if (resources.containsKey(restype)) //если мы изменили сущ. значение
+        {
+           this.commands.push(()->{this.resources.put(restype, val);});
+        }
+        else //если мы добавили новое значение
+        {
+            this.commands.push(()->{this.resources.remove(restype);});
+        }
         this.resources.put(restype, val);
     }
 
