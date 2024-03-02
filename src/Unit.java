@@ -19,6 +19,20 @@ public class Unit {
         this.name = name;
     }
 
+    private Integer health =100;
 
 
+    public Integer getHealth() {
+        return health;
+    }
+
+    public void setHealth(Integer health) {
+       if (health<0 || health>100) throw new IllegalArgumentException();
+       this.health = health;
+    }
+
+    public void doVoice()
+    {
+        System.out.println("Iam "+this.name);
+    }
 }
