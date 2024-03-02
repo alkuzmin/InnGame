@@ -21,5 +21,24 @@ public class Main {
         u1.doVoice();
         u1.undo();
         u1.doVoice();
+
+
+        System.out.println("\n\n========================");
+        u1.setResources(ResTypes.GOLD,10);
+        u1.setResources(ResTypes.ENERGY,20);
+        u1.printResources();
+        u1.doVoice();
+        Loadable qs1 = u1.Save();
+        u1.setName("PseudoOrk1");
+        u1.setResources(ResTypes.ENERGY, 66);
+        u1.setResources(ResTypes.GOLD,66);
+        System.out.println("\n---------------");
+        u1.printResources();
+        u1.doVoice();
+        qs1.load(); //восстанавливаемся
+        System.out.println("\n---------------");
+        u1.printResources();
+        u1.doVoice();
+
         }
     }

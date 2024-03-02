@@ -3,6 +3,11 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.HashMap;
 
+interface Loadable
+{
+    void load();
+}
+
 class NothingToUndo extends Exception{}
 
 enum ResTypes {GOLD, WATER, FOOD, ENERGY}
@@ -10,6 +15,29 @@ interface Command{
     public void perform();
 }
 public class Unit {
+
+    public Loadable Save() {return new Snapshot();}
+    private class Snapshot implements Loadable
+    {
+        private String name;
+        private Integer health;
+        private HashMap<ResTypes, Integer> resources;
+
+        public Snapshot ()
+        {
+            this.health = Unit.this.health;
+            this.name = Unit.this.name;
+            this.resources = new HashMap<>(Unit.this.resources);
+
+        }
+        @Override
+        public void load() {
+            Unit.this.name = this.name;
+            Unit.this.health = this.health;
+            Unit.this.resources = new HashMap<>(this.resources);
+        }
+    }
+
     private Deque<Command> commands = new ArrayDeque<>();
 
     private Unit(){};
