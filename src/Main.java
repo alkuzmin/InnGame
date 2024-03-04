@@ -40,5 +40,13 @@ public class Main {
         u1.printResources();
         u1.doVoice();
 
+        System.out.println("***************************");
+        Unit u2 = new Unit("rt");
+        u2.setWorld("Inner");
+        System.out.println(u2.getWorld());
+        u2.setWorld("Outer");
+        u2.undo();
+        System.out.println(u2.getWorld());
+
         }
     }

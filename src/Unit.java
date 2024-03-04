@@ -17,6 +17,19 @@ interface Command{
 public class Unit {
 
     public Loadable Save() {return new Snapshot();}
+
+    private String world;
+
+    public String getWorld() {
+        return world;
+    }
+
+    public void setWorld(String world) {
+        String oldWorld= this.getWorld();
+        this.commands.push(()->{this.world=oldWorld;});
+        this.world = world;
+    }
+
     private class Snapshot implements Loadable
     {
         private String name;
